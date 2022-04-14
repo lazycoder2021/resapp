@@ -1,0 +1,533 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+            font-family: 'Ubuntu', sans-serif;
+        }
+
+        /* container 1*/
+
+        .container1 {
+            height: 100vh;
+            width: 100%;
+            border: 1px solid black;
+        }
+
+        .owl-carousel {
+            height: 100%;
+            width: 100%;
+            z-index: -100;
+            position: relative;
+        }
+
+            .owl-carousel .image-wrapper {
+                height: 100vh;
+                width: 100%;
+                background-size: cover;
+                background-position: center center;
+            }
+
+        .image-wrapper img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .navbar {
+            border-radius: 15px;
+            display: flex;
+            background-color: crimson;
+            width: 80%;
+            //margin:100px auto;
+            height: 70px;
+            z-index: 100;
+            position: absolute;
+            top: 50px;
+            left: 120px;
+            justify-content: space-between;
+            align-items: center;
+            color: rgb(255,255,255);
+        }
+
+            .navbar .logo {
+                margin-left: 30px;
+                font-size: 16px;
+            }
+
+                .navbar .logo p {
+                    font-size: 22px;
+                }
+
+
+            .navbar .cart-icon {
+                margin-right: 30px;
+                font-size: 32px;
+                cursor:pointer;
+            }
+
+        .nav-links {
+            display: flex;
+            cursor: pointer;
+            width: 350px;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+            .nav-links p {
+                font-size: 18px;
+            }
+
+        .banner {
+            position: absolute;
+            top: 400px;
+            left: 400px;
+            color: white;
+            background-color: crimson;
+            width: 600px;
+            padding: 40px;
+            border-radius: 15px;
+            opacity: 0.8;
+        }
+
+        .banner-header {
+            margin-bottom: 10px;
+        }
+
+        .banner-paragraph {
+            margin-bottom: 20px;
+        }
+
+        span {
+            border: 1px solid white;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.7);
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .registration-form, .login-form {
+            z-index: 201;
+            top: 300px;
+            width: 450px;
+            height: 200px;
+            left: 500px;
+            position: absolute;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .form-header {
+            height: 30px;
+            width: 100%;
+            background: crimson;
+            color: white;
+            text-transform: uppercase;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+            .form-header p {
+                margin-left: 10px;
+                padding: 50px 0px;
+                font-size: 20px;
+            }
+
+        .form-control {
+            //border:1px solid black;
+            width: 400px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin: 10px auto;
+        }
+
+            .form-control input {
+                width: 80%;
+                border-radius: 4px;
+                font-size: 15px;
+                outline: none;
+                padding: 3px;
+            }
+
+            .form-control label {
+                width: 20%;
+            }
+
+        .btn {
+            width: 100%;
+            text-transform: uppercase;
+            margin: 15px auto;
+            font-size: 16px;
+            padding: 5px;
+            background: crimson;
+            color: white;
+            //position:absolute;
+            //top:120px;
+            //left:0px;
+        }
+
+        .close{
+            position:absolute; 
+            top:3px; 
+            right:3px; 
+            cursor:pointer;
+        }
+
+        /* container 2 */
+
+        .container2{
+            height:100vh;
+            width:100%;
+            
+        }
+
+        .menu-header{
+            width:400px;
+            height:70px;
+            //border:1px solid black;
+            margin:100px auto 30px;
+            text-align:center;
+        }
+
+        .menu-header h2{
+            margin-bottom:10px;
+        }
+
+        .menu-header p{
+            font-size:20px;
+        }
+
+        .menu-items{
+            width:80%; 
+            height:120vh;
+            //border:1px solid red;
+            margin:0px auto;
+            display:flex;
+            justify-content:flex-start; 
+            align-items:center;
+            flex-wrap:wrap; 
+            
+        }
+
+        .menu-item{
+            //border:1px solid black;
+            width:33.33%; 
+            height:300px; 
+            display:flex;
+            flex-direction:column;
+        }
+
+        .menu-details-1, .menu-details-2{
+            border:1px solid black;
+            height:50%;
+            width:100%;
+        }
+
+        .menu-details-1{
+            background:crimson;
+            color:white;
+            opacity:0.8; 
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            
+        }
+
+        .menu-details-2 {
+            display: flex;
+            flex-direction: column;
+            
+            
+        }
+
+        .menu-details-1 h2{
+            text-align:center;
+        }
+
+        .menu-desc-1 p{
+            text-align:center;
+            margin-top:10px;
+        }
+
+        .menu-desc-1, .menu-desc-2{
+            height:50%; 
+            //border:2px solid black;
+        }
+
+        .menu-desc-2 {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .menu-desc-2 p{
+            margin-left:10px;
+            font-weight:900;
+            font-size:24px;
+        }
+
+        .menu-desc-2 a{
+            border:1px solid black;
+            margin-right:10px;
+            padding:10px;
+        }
+
+        .menu-desc-2 a:hover{
+            background:crimson; 
+            opacity:0.8;
+            cursor:pointer;
+        }
+
+        /* container 3*/
+
+        .container3{
+            margin-top:100px;
+            height:100vh;
+            width:100%; 
+        }
+
+        .cart-box{
+            width:400px;
+            height:200px;
+            background:white;
+            position:absolute;
+            top:100px;
+            left:900px;
+            background:crimson;
+            color:white;
+        }
+
+        .checkout-btn{
+            border:1px solid white;
+            padding:10px;
+            margin-top:20px;
+            display:block;
+            width:100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container1">
+
+        <!-- LOGIN AND REGISTRATION FORMS-->
+
+        <form class="registration-form hide">
+            <div class="close">
+                <i class="fas fa-window-close close-icon"></i>
+            </div>
+            <div class="form-header"><p>Register</p></div>
+            <div class="form-control">
+                <label for="email">Email</label>
+                <input type="text" class="email" />
+            </div>
+            <div class="form-control">
+                <label for="password">Password</label>
+                <input type="text" class="password" />
+            </div>
+            <div class="form-control">
+                <button type="submit" class="btn">Submit</button>
+            </div>
+        </form>
+
+
+        <form class="login-form hide">
+            <div class="close">
+                <i class="fas fa-window-close close-icon"></i>
+            </div>
+            <div class="form-header"><p>Login</p></div>
+            <div class="form-control">
+                <label for="email1">Email</label>
+                <input type="text" class="email1" />
+            </div>
+            <div class="form-control">
+                <label for="password1"><p>Password</p></label>
+                <input type="text" class="password1" />
+            </div>
+            <div class="form-control">
+                <button type="submit" class="btn">Submit</button>
+            </div>
+        </form>
+
+
+        <!-- END OF LOGIN AND REGISTRATION FORMS -->
+
+
+
+        <div class="navbar">
+            <div class="logo"><p>Bai Biryani</p></div>
+            <div class="nav-links">
+                <p>Home</p>
+                <p>Menu</p>
+                <p>About</p>
+                <p class="register">Register</p>
+                <p class="login">Login</p>
+            </div>
+            <div class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+
+            <div class="cart-box hide">
+                <p>Your cart is empty.</p>
+                
+            </div>
+        </div>
+
+        <div class="owl-carousel">
+
+            <div class="image-wrapper">
+                <img src="1.jpg" class="owl-lazy" data-src="./images/1.jpg" />
+                <div class="banner banner1">
+                    <div class="banner-wrapper">
+                        <div class="banner-header">
+                            <h2>Launching 99m Biryani Delivery Across Chennai</h2>
+                        </div>
+                        <div class="banner-paragraph">
+                            <p>One two three four, five six seven eight, nine ten eleven twelve, thirteen, fourteen, fifteen. One two three four, five six seven eight, nine ten.</p>
+                        </div>
+                        <span>Order Now</span>
+                        <span>View Menu</span>
+                    </div>
+                </div>
+            </div>
+            <div class="image-wrapper">
+                <img src="2.jpg" class="owl-lazy" data-src="./images/2.jpg" />
+                <div class="banner banner2" style="color:white;">
+                    <div class="banner-wrapper">
+                        <div class="banner-header">
+                            <h2>All Varieties Of Biryani Available</h2>
+                        </div>
+                        <div class="banner-paragraph">
+                            <p>One two three four, five six seven eight, nine ten eleven twelve, thirteen, fourteen, fifteen. One two three four, five six seven eight, nine ten.</p>
+                        </div>
+                        <span>Order Now</span>
+                        <span>Book Now</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="image-wrapper">
+                <img src="3.jpg" class="owl-lazy" data-src="./images/3.jpg" />
+                <div class="banner banner3" style="color:white;">
+                    <div class="banner-wrapper">
+                        <div class="banner-header">
+                            <h2>The Biryani Cordially Invites You</h2>
+                        </div>
+                        <div class="banner-paragraph">
+                            <p>One two three four, five six seven eight, nine ten eleven twelve, thirteen, fourteen, fifteen. One two three four, five six seven eight, nine ten.</p>
+                        </div>
+                        <span>Order Now</span>
+                        <span>View Menu</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="overlay hide"></div>
+    </div>
+
+    <div class="container2">
+        <div class="menu-header">
+            <h2>Our Menu</h2>
+            <p>Every Item Is Cooked With Utmost Love</p>
+        </div>
+        <div class="menu-items">
+            
+        </div>
+    </div>
+
+
+    <div class="container3">
+        
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    <script src="index.js"></script>
+
+    <script>
+
+        $('.owl-carousel').owlCarousel({
+            items: 1,
+            lazyLoad: true,
+            loop: true,
+            margin: 10,
+            autoplay: true,
+            autoplaySpeed: 500
+        })
+
+        
+        document.querySelector('.login').addEventListener('click', function () {
+            document.querySelector('.overlay').classList.toggle('hide');
+            document.querySelector('.login-form').classList.toggle('hide');
+        })
+
+
+        document.querySelector('.register').addEventListener('click', function () {
+            document.querySelector('.overlay').classList.toggle('hide');
+            document.querySelector('.registration-form').classList.toggle('hide');
+            document.querySelector('.login-form').classList.add('hide');
+
+        })
+
+
+        /*document.querySelector('.close').addEventListener('click', function (e) {
+            alert('hi...')
+            //document.querySelector('.registration-form').classList.add('hide');
+            const element = e.target.parentElement.parentElement; 
+            element.classList.add('hide'); 
+        })*/
+
+        document.querySelectorAll('.close').forEach((close) => {
+            close.addEventListener('click', function (e) {
+                console.log(e.target)
+                const element = e.target.parentElement.parentElement;
+                element.classList.add('hide'); 
+                document.querySelector('.overlay').classList.add('hide');
+            })
+        })
+
+
+        document.querySelector('.cart-icon').addEventListener('click', function () {
+            document.querySelector('.cart-box').classList.toggle('hide'); 
+        })
+
+
+    </script>
+</body>
+</html>
